@@ -35,7 +35,14 @@ make latexpdfja || exit -1
 # get hash number of the HEAD
 hash=`git log -1 --format=%H --`
 
-git checkout gh-pages || exit -1
+git branch | grep gh-pages
+if [ $? -ne 0 ]; then
+    # make gh-pages branch
+    git checkout --orphan gh-pages || exit -1
+    git rm -rf . || exit -1
+else
+    git checkout gh-pages || exit -1
+fi
 
 # .nojekyll file is required to show sphinx html in github pages
 touch .nojekyll
