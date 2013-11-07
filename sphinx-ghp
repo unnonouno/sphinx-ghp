@@ -59,8 +59,16 @@ for dir in build/*; do
 done
 
 git commit -m "Auto generated from ${hash}" || exit -1
+pdf=`ls latex/*.pdf`
 
 git checkout master || exit -1
 
 echo "Success to update gh-pages branch"
-echo "Publish it with the command:  git push origin gh-pages"
+echo "Publish the result with the command below:"
+echo
+echo "   git push origin gh-pages"
+echo
+
+root=`git config --get remote.origin.url | sed -e "s/git@\(.*\):\(.*\/.*\)\.git/https:\/\/\1\/pages\/\2/g"`
+echo " HTML:   ${root}/html/"
+echo " LaTeX:  ${root}/${pdf}"
