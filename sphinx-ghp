@@ -26,6 +26,13 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+while getopts :p OPT
+do
+    case $OPT in
+        "p" ) PUSH="TRUE" ;;
+    esac
+done
+
 git checkout master || exit -1
 
 # generate build directory, that is not in the git repository
@@ -64,10 +71,15 @@ pdf=`ls latex/*.pdf`
 git checkout master || exit -1
 
 echo "Success to update gh-pages branch"
-echo "Publish the result with the command below:"
-echo
-echo "   git push origin gh-pages"
-echo
+
+if [ ${PUSH} == "TRUE" ]; then
+    git push origin gh-pages
+else
+    echo "Publish the result with the command below:"
+    echo
+    echo "   git push origin gh-pages"
+    echo
+fi
 
 root=`git config --get remote.origin.url | sed -e "s/git@\(.*\):\(.*\/.*\)\.git/https:\/\/\1\/pages\/\2/g"`
 echo " HTML:   ${root}/html/"
