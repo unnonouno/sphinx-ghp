@@ -44,6 +44,12 @@ hash=`git log -1 --format=%H --`
 
 git branch | grep gh-pages
 if [ $? -ne 0 ]; then
+    git branch -D gh-pages
+fi
+
+git fetch origin
+git branch -r | grep gh-pages
+if [ $? -ne 0 ]; then
     # make gh-pages branch
     git checkout --orphan gh-pages
     git rm -rf .
