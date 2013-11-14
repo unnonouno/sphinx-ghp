@@ -25,4 +25,4 @@ Usage
 License
 -------
 
-This script is distributed under the new BSD license.
+This script is distributed under the MIT license.
